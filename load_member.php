@@ -1,7 +1,7 @@
 <?php
 include 'db_connect.php';
 
-$qry = $conn->query("SELECT * FROM users where status = 1 and is_admin = 1 order by name asc");
+$qry = $conn->query("SELECT * FROM users where status = 1 and is_admin = 0 order by name asc");
 $data = array();
 while($row = $qry->fetch_assoc()){
 	$data[]= $row;

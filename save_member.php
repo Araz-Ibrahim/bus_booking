@@ -4,8 +4,12 @@ include('db_connect.php');
 extract($_POST);
 	$data = " name = '$name' ";
 	$data .= ", username = '$username' ";
-	$data .= ", password = '$password' ";
-    $data .= ", is_admin = 1 ";
+    $data .= ", password = '$password' ";
+    $data .= ", blood_type = '$blood_type' ";
+    $data .= ", phone = '$phone' ";
+    $data .= ", phone_2 = '$phone_2' ";
+    $data .= ", date_updated = now() ";
+    $data .= ", is_admin = 0 ";
 
 if(empty($id)){
 	

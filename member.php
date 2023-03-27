@@ -4,7 +4,7 @@
 		<div class="col-lg-12">
 			<div class="row">
 				<div class="col-md-12">
-					<button class="float-right btn btn-primary btn-sm" type="button" id="new_user">Add New <i class="fa fa-plus"></i></button>
+					<button class="float-right btn btn-primary btn-sm" type="button" id="new_member">Add New <i class="fa fa-plus"></i></button>
 				</div>
 			</div>
 			<div class="row">
@@ -19,7 +19,10 @@
 								<tr>
 									<th class="text-center">#</th>
 									<th class="text-center">Name</th>
-									<th class="text-center">User Name</th>
+                                    <th class="text-center">User Name</th>
+                                    <th class="text-center">Blood Type</th>
+                                    <th class="text-center">Phone Number</th>
+                                    <th class="text-center">Second Phone Number</th>
 									<th class="text-center">Action</th>
 								</tr>
 							</thead>
@@ -36,15 +39,14 @@
 </main>
 </section>
 <script>
-    const user_id = <?php echo $_SESSION['login_id'] ?>;
-	$('#new_user').click(function(){
-		uni_modal('Add New Bus','manage_user.php')
+	$('#new_member').click(function(){
+		uni_modal('Add New Bus','manage_member.php')
 	})
 	window.load_user = function(){
 		$('#user-field').dataTable().fnDestroy();
 		$('#user-field tbody').html('<tr><td colspan="4" class="text-center">Please wait...</td></tr>')
 		$.ajax({
-			url:'load_user.php',
+			url:'load_member.php',
 			error:err=>{
 				console.log(err)
 				alert_toast('An error occured.','danger');
@@ -60,8 +62,11 @@
 									var tr = $('<tr></tr>');
 									tr.append('<td class="text-center">'+(i++)+'</td>')
 									tr.append('<td class="text-center">'+resp[k].name+'</td>')
-									tr.append('<td>'+resp[k].username+'</td>')
-									tr.append('<td><center><button class="btn btn-sm btn-primary edit_bus mr-2" data-id="'+resp[k].id+'">Edit</button><button class="btn btn-sm btn-danger remove_bus" data-id="'+resp[k].id+'">Delete</button></center></td>')
+                                    tr.append('<td>'+resp[k].username+'</td>')
+                                    tr.append('<td>'+resp[k].blood_type+'</td>')
+                                    tr.append('<td>'+resp[k].phone+'</td>')
+                                    tr.append('<td>'+resp[k].phone_2+'</td>')
+									tr.append('<td><center><button class="btn btn-sm btn-primary edit_bus mr-2" data-id="'+resp[k].id+'">Edit</button><button class="btn btn-sm btn-danger remove_bus" data-id="'+resp[k].id+'">Delete</button><button class="btn btn-sm btn-warning make_admin" data-id="'+resp[k].id+'">Make Admin</button></center></td>')
 									$('#user-field tbody').append(tr)
 
 								})
@@ -80,16 +85,16 @@
 	}
 	function manage(){
 		$('.edit_bus').click(function(){
-		uni_modal('Edit New User','manage_user.php?id='+$(this).attr('data-id'))
+		uni_modal('Edit New User','manage_member.php?id='+$(this).attr('data-id'))
 
 		})
 		$('.remove_bus').click(function(){
-            if(user_id == $(this).attr('data-id'))
-                return alert_toast("You can't delete your own account.",'danger');
-
 		_conf('Are you sure to delete this data?','remove_bus',[$(this).attr('data-id')])
 
 		})
+        $('.make_admin').click(function(){
+            _conf('Are you sure to make this user to admin?','make_admin',[$(this).attr('data-id')])
+        })
 	}
 	function remove_bus($id=''){
 		start_load()
@@ -112,6 +117,27 @@
 			}
 		})
 	}
+    function make_admin($id=''){
+        start_load()
+        $.ajax({
+            url:'make_admin.php',
+            method:'POST',
+            data:{id:$id},
+            error:err=>{
+                console.log(err)
+                alert_toast("An error occured","danger");
+                end_load()
+            },
+            success:function(resp){
+                if(resp== 1){
+                    alert_toast("Data succesfully updated","success");
+                    end_load()
+                    $('.modal').modal('hide')
+                    load_user()
+                }
+            }
+        })
+    }
 	$(document).ready(function(){
 		load_user()
 	})

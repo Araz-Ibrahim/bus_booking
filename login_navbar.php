@@ -6,14 +6,8 @@
       <nav class="nav-menu d-none d-lg-block" id='top-nav'>
         <ul>
           <li class="nav-home"><a href="./index.php?page=home">Home</a></li>
-            <li class="nav-schedule"><a href="./index.php?page=schedule">Schedule</a></li>
-            <li class="drop-down nav-user"><a href="#"><?php echo $_SESSION['login_name'] ?> </a>
-                <ul>
-                    <li><a href="javascript:void(0)" id="manage_account_member">Manage Account</a></li>
-                    <li><a href="./logout.php">Logout</a></li>
-
-                </ul>
-            </li>
+            <li class="nav-schedule"><a href="./login_user.php">Login</a></li>
+            <li class="nav-schedule"><a href="./register_user.php">Register</a></li>
               
         </ul>
       </nav><!-- .nav-menu -->
@@ -28,8 +22,8 @@
         $('#top-nav li').removeClass('active')
         $('#top-nav li.nav-'+page).addClass('active')
       }
-      $('#manage_account_member').click(function(){
-      uni_modal('Manage Account','manage_account_member.php')
+      $('#manage_account').click(function(){
+      uni_modal('Manage Account','manage_account.php')
   })
     })
 

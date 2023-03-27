@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Bus Booking Management System</title>
+  <title>Bus Booking Management System </title>
 
 </head>
 
@@ -16,7 +16,13 @@
 
   header('index.php?page=home');
  include 'header.php'; ?>
-<?php if(isset($_SESSION['login_id'])) include 'admin_navbar.php'; else include 'navbar.php'; ?>
+
+    <?php if(isset($_SESSION['login_id']) && $_SESSION['login_is_admin'] == 1)
+        include 'admin_navbar.php';
+    elseif(isset($_SESSION['login_id']) && $_SESSION['login_is_admin'] == 0)
+        include 'navbar.php';
+    else
+        include 'login_navbar.php'; ?>
 
 <div class="toast" id="alert_toast" role="alert" aria-live="assertive" aria-atomic="true">
   <div class="toast-body text-white">

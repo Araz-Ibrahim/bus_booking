@@ -18,7 +18,8 @@
           </li>
           <li class="drop-down nav-user"><a href="#"><?php echo $_SESSION['login_name'] ?> </a>
              <ul>
-              <li><a href="./index.php?page=user">Users</a></li>
+                 <li><a href="./index.php?page=user">Admins</a></li>
+                 <li><a href="./index.php?page=member">Users</a></li>
               <li><a href="javascript:void(0)" id="manage_account">Manage Account</a></li>
               <li><a href="./logout.php">Logout</a></li>
              
