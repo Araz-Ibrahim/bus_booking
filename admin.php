@@ -53,7 +53,7 @@
                     $('#login-frm button').html('Please wait...')
 
                     $.ajax({
-                        url:'./login_auth.php',
+                        url:'./admin_auth.php',
                         method:'POST',
                         data:$(this).serialize(),
                         error:err=>{

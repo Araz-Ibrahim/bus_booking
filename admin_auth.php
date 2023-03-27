@@ -3,7 +3,7 @@
 	session_start();
 
 	extract($_POST);
-	$qry = $conn->query("SELECT * FROM users where username='$username' and password = '$password' and is_admin = 0");
+	$qry = $conn->query("SELECT * FROM users where username='$username' and password = '$password' and is_admin = 1");
 	if($qry->num_rows > 0){
 		foreach($qry->fetch_array() as $k => $val){
 			if($k != 'password')

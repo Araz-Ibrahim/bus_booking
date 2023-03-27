@@ -38,7 +38,7 @@
 <script>
     const user_id = <?php echo $_SESSION['login_id'] ?>;
 	$('#new_user').click(function(){
-		uni_modal('Add New Bus','manage_user.php')
+		uni_modal('Add New Admin','manage_user.php')
 	})
 	window.load_user = function(){
 		$('#user-field').dataTable().fnDestroy();

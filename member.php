@@ -40,7 +40,7 @@
 </section>
 <script>
 	$('#new_member').click(function(){
-		uni_modal('Add New Bus','manage_member.php')
+		uni_modal('Add New User','manage_member.php')
 	})
 	window.load_user = function(){
 		$('#user-field').dataTable().fnDestroy();
