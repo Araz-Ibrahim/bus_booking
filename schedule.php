@@ -2,7 +2,7 @@
 <main id="main">
 	<div class="container-fluid">
 		<div class="col-lg-12">
-			<?php  if(isset($_SESSION['login_id'])): ?>
+            <?php  if(isset($_SESSION['login_id']) && $_SESSION['login_is_admin'] == 1): ?>
 			<div class="row">
 				<div class="col-md-12">
 					<button class="float-right btn btn-primary btn-sm" type="button" id="new_schedule">Add New <i class="fa fa-plus"></i></button>
@@ -54,9 +54,11 @@
 </main>
 </section>
 <script>
-	$('#new_schedule').click(function(){
-		uni_modal('Add New Schedule','manage_schedule.php')
-	})
+    <?php  if(isset($_SESSION['login_id']) && $_SESSION['login_is_admin'] == 1): ?>
+        $('#new_schedule').click(function(){
+            uni_modal('Add New Schedule','manage_schedule.php')
+        })
+    <?php endif; ?>
 	window.load_schedule = function(){
 		$('#schedule-field').dataTable().fnDestroy();
 		$('#schedule-field tbody').html('<tr><td colspan="7" class="text-center">Please wait...</td></tr>')
@@ -83,9 +85,8 @@
 									tr.append('<td>'+resp[k].eta+'</td>')
 									tr.append('<td>'+resp[k].availability+'</td>')
 									tr.append('<td>'+resp[k].price+'</td>')
-									if('<?php echo isset($_SESSION['login_id']) ? 1 : 0 ?>' == 1){
-
-									tr.append('<td><center><button class="btn btn-sm btn-primary edit_schedule mr-2" data-id="'+resp[k].id+'">Edit</button><button class="btn btn-sm btn-danger remove_schedule" data-id="'+resp[k].id+'">Delete</button></center></td>')
+									if('<?php echo $_SESSION['login_is_admin'] == 1 ? 1 : 0 ?>' == 1){
+									    tr.append('<td><center><button class="btn btn-sm btn-primary edit_schedule mr-2" data-id="'+resp[k].id+'">Edit</button><button class="btn btn-sm btn-danger remove_schedule" data-id="'+resp[k].id+'">Delete</button></center></td>')
 									}else{
 										tr.append('<td><center><button class="btn btn-sm btn-primary mr-2 text-white book_now" data-id="'+resp[k].id+'"><strong>Book Now</strong></button></center></td>')
 									}

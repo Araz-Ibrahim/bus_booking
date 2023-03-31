@@ -6,6 +6,7 @@ extract($_POST);
 
 $data = ' schedule_id = '.$sid.' ';
 $data .= ', name = "'.$name.'" ';
+$data .= ', user_id = '.$user_id.' ';
 $data .= ', qty ="'.$qty.'" ';
 if(!empty($bid)){
 	$data .= ', status ="'.$status.'" ';

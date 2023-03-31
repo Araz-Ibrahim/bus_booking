@@ -26,11 +26,13 @@ if(isset($_SESSION['login_id']) && isset($_GET['bid'])){
 			<p><b>To:</b> <?php echo $to_location['location'] ?></p>
 			<p><b>Departure Time</b>: <?php echo date('M d,Y h:i A',strtotime($meta['departure_time'])) ?></p>
 			<p><b>Estimated Time of Arrival:</b> <?php echo date('M d,Y h:i A',strtotime($meta['eta'])) ?></p>
-			<?php if(($count < $meta['availability']) || isset($_SESSION['login_id'])): ?>
+			<?php if(($count < $meta['availability']) && isset($_SESSION['login_id'])): ?>
 			<input type="hidden" class="form-control" id="sid" name="sid" value='<?php echo isset($_GET['id']) ? $_GET['id'] : '' ?>' required="">
 			<input type="hidden" class="form-control" id="sid" name="bid" value='<?php echo isset($_GET['bid']) ? $_GET['bid'] : '' ?>' required="">
-			
-			<div class="form-group mb-2">
+
+            <input type="text" name="user_id" value="<?php echo isset($bmeta['user_id']) ? $bmeta['user_id'] : ($_SESSION['login_is_admin'] == 0 ? $_SESSION['login_id'] : ''); ?>">
+
+            <div class="form-group mb-2">
 				<label for="name" class="control-label">Name</label>
 				<input type="text" class="form-control" id="name" name="name" value="<?php echo isset($bmeta['name']) ? $bmeta['name'] : '' ?>">
 			</div>
@@ -79,7 +81,7 @@ if(isset($_SESSION['login_id']) && isset($_GET['bid'])){
     				end_load()
     				$('.modal').modal('hide')
     				alert_toast('Data successfully saved','success');
-    				if('<?php echo !isset($_SESSION['login_id']) ?>' == 1){
+    				if('<?php echo isset($_SESSION['login_id']) ?>' == 1){
     				$('#book_modal .modal-body').html('<div class="text-center"><p><strong><h3>'+resp.ref+'</h3></strong></p><small>Reference Number</small><br/><small>Copy or Capture your Reference number </small></div>')
     				$('#book_modal').modal('show')
     				}else{

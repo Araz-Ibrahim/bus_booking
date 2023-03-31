@@ -65,12 +65,13 @@
 									var tr = $('<tr></tr>');
 									tr.append('<td class="text-center">'+(i++)+'</td>')
 									tr.append('<td class="">'+resp[k].ref_no+'</td>')
-									tr.append('<td class="">'+resp[k].name+'</td>')
+									tr.append('<td class=""><a class="view-user" style="text-decoration: underline !important; cursor: pointer;" data-id=' + resp[k].user_id + ' + >'+resp[k].name+'</a></td>')
 									tr.append('<td class="">'+resp[k].qty+'</td>')
 									tr.append('<td class="">'+resp[k].amount+'</td>')
 									tr.append('<td class="">'+(resp[k].status == 1 ? 'Paid' :'Unpaid')+'</td>')
-									
-										tr.append('<td><center><button class="btn btn-sm btn-primary mr-2 text-white edit_booked" data-id="'+resp[k].schedule_id+'" data-bid="'+resp[k].id+'"><strong>Edit</strong></button></center></td>')
+
+                                    // tr.append('<td><center>No Action</center></td>')
+                                    tr.append('<td><center><button class="btn btn-sm btn-primary mr-2 text-white edit_booked" data-id="'+resp[k].schedule_id+'" data-bid="'+resp[k].id+'"><strong>Edit</strong></button></center></td>')
 									$('#booked-field tbody').append(tr)
 
 								})
@@ -86,6 +87,9 @@
 				$('.edit_booked').click(function(){
 					uni_modal('Edit Booked','customer_book.php?id='+$(this).attr('data-id')+'&bid='+$(this).attr('data-bid'),1)
 				})
+                $('.view-user').click(function(){
+                    uni_modal('User Details','view_user.php?id='+$(this).data('id'))
+                })
 			}
 		})
 	}
