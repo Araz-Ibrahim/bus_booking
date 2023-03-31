@@ -14,10 +14,10 @@ include('db_connect.php');
 				<input type="hidden" class="form-control" id="id" name="id" value='<?php echo isset($meta['id']) ? $meta['id'] : '' ?>' required="">
 				<input type="text" class="form-control" id="name" name="name" required="" value="<?php echo isset($meta['name']) ? $meta['name'] : '' ?>">
 			</div>
-			<div class="form-group mb-2">
-				<label for="username" class="control-label">User Name</label>
-				<input type="text" class="form-control" id="username" name="username" required value="<?php echo isset($meta['username']) ? $meta['username'] : '' ?>">
-			</div>
+<!--			<div class="form-group mb-2">-->
+<!--				<label for="username" class="control-label">User Name</label>-->
+<!--				<input type="hidden" class="form-control" id="username" name="username" required value="--><?php //echo isset($meta['username']) ? $meta['username'] : '' ?><!--">-->
+<!--			</div>-->
 			<div class="form-group mb-2">
 				<label for="password" class="control-label">Password</label>
 				<input type="password" class="form-control" id="password" name="password" required value="<?php echo isset($meta['password']) ? $meta['password'] : '' ?>">

@@ -19,7 +19,7 @@ if(isset($_SESSION['login_id']) && isset($_GET['bid'])){
 }
 ?>
 <div class="container-fluid">
-	<form id="manage_book">
+	<form id="manage_book_form">
 		<div class="col-md-12">
 			<p><b>Bus:</b> <?php echo $bus['bus_number'] . ' | '.$bus['name'] ?></p>
 			<p><b>From:</b> <?php echo $from_location['location'] ?></p>
@@ -30,17 +30,13 @@ if(isset($_SESSION['login_id']) && isset($_GET['bid'])){
 			<input type="hidden" class="form-control" id="sid" name="sid" value='<?php echo isset($_GET['id']) ? $_GET['id'] : '' ?>' required="">
 			<input type="hidden" class="form-control" id="sid" name="bid" value='<?php echo isset($_GET['bid']) ? $_GET['bid'] : '' ?>' required="">
 
-            <input type="text" name="user_id" value="<?php echo isset($bmeta['user_id']) ? $bmeta['user_id'] : ($_SESSION['login_is_admin'] == 0 ? $_SESSION['login_id'] : ''); ?>">
+            <input type="hidden" name="user_id" value="<?php echo isset($bmeta['user_id']) ? $bmeta['user_id'] : ($_SESSION['login_is_admin'] == 0 ? $_SESSION['login_id'] : ''); ?>">
 
-            <div class="form-group mb-2">
-				<label for="name" class="control-label">Name</label>
-				<input type="text" class="form-control" id="name" name="name" value="<?php echo isset($bmeta['name']) ? $bmeta['name'] : '' ?>">
-			</div>
 			<div class="form-group mb-2">
 				<label for="qty" class="control-label">Quantity</label>
-				<input type="number" maxlength="4" class="form-control text-right" id="qty" name="qty" value="<?php echo isset($bmeta['qty']) ? $bmeta['qty'] : '' ?>">
+				<input type="number" maxlength="4" class="form-control text-right" id="qty" name="qty" value="<?php echo isset($bmeta['qty']) ? $bmeta['qty'] : '1' ?>" required>
 			</div>
-			<?php if(isset($_SESSION['login_id'])): ?>
+			<?php if($_SESSION['login_is_admin'] == 1): ?>
 			<div class="form-group mb-2">
 				<label for="qty" class="control-label">Status</label>
 				<select  class="form-control" id="status" name="status" value="<?php echo isset($bmeta['qty']) ? $bmeta['qty'] : '' ?>">
@@ -63,7 +59,7 @@ if(isset($_SESSION['login_id']) && isset($_GET['bid'])){
 
 
 <script>
-	$('#manage_book').submit(function(e){
+	$('#manage_book_form').submit(function(e){
 		e.preventDefault()
 		start_load()
 		$.ajax({
@@ -81,7 +77,7 @@ if(isset($_SESSION['login_id']) && isset($_GET['bid'])){
     				end_load()
     				$('.modal').modal('hide')
     				alert_toast('Data successfully saved','success');
-    				if('<?php echo isset($_SESSION['login_id']) ?>' == 1){
+    				if('<?php echo isset($_SESSION['login_is_admin']) ?>' == 0){
     				$('#book_modal .modal-body').html('<div class="text-center"><p><strong><h3>'+resp.ref+'</h3></strong></p><small>Reference Number</small><br/><small>Copy or Capture your Reference number </small></div>')
     				$('#book_modal').modal('show')
     				}else{

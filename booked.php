@@ -1,17 +1,11 @@
- <section id="bg-bus" class="d-flex align-items-center">
+<?php
+    if(isset($_SESSION['login_is_admin']) && $_SESSION['login_is_admin'] == 1){
+
+?>
+<section id="bg-bus" class="d-flex align-items-center">
 <main id="main">
 	<div class="container-fluid">
 		<div class="col-lg-12">
-			<?php  if(isset($_SESSION['login_id'])): ?>
-			<div class="row">
-				<div class="col-md-12">
-					
-				</div>
-			</div>
-		<?php endif; ?>
-			<div class="row">
-				&nbsp;
-			</div>
 			<div class="row">
 				<div class="card col-md-12">
 					
@@ -23,7 +17,8 @@
 									<th class="text-center">#</th>
 									<th class="text-center">Ref. No.</th>
 									<th class="text-center">Name</th>
-									<th class="text-center">Qty</th>
+                                    <th class="text-center">Schedule</th>
+                                    <th class="text-center">Qty</th>
 									<th class="text-center">Amount</th>
 									<th class="text-center">Status</th>
 									<th class="text-center">Action</th>
@@ -66,7 +61,8 @@
 									tr.append('<td class="text-center">'+(i++)+'</td>')
 									tr.append('<td class="">'+resp[k].ref_no+'</td>')
 									tr.append('<td class=""><a class="view-user" style="text-decoration: underline !important; cursor: pointer;" data-id=' + resp[k].user_id + ' + >'+resp[k].name+'</a></td>')
-									tr.append('<td class="">'+resp[k].qty+'</td>')
+                                    tr.append('<td><center><button class="btn btn-sm btn-outline-secondary mr-2 view_shcedule" data-id="'+resp[k].schedule_id+'"><strong>View Schedule</strong></button></center></td>')
+                                    tr.append('<td class="">'+resp[k].qty+'</td>')
 									tr.append('<td class="">'+resp[k].amount+'</td>')
 									tr.append('<td class="">'+(resp[k].status == 1 ? 'Paid' :'Unpaid')+'</td>')
 
@@ -90,6 +86,9 @@
                 $('.view-user').click(function(){
                     uni_modal('User Details','view_user.php?id='+$(this).data('id'))
                 })
+                $('.view_shcedule').click(function(){
+                    uni_modal('Schedule Details','view_schedule.php?id='+$(this).data('id'))
+                })
 			}
 		})
 	}
@@ -98,3 +97,6 @@
 		load_booked()
 	})
 </script>
+
+<?php
+    }

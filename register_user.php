@@ -1,4 +1,10 @@
-
+<?php
+session_start();
+if(isset($_SESSION['login_id'])){
+    header('Location: index.php');
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -91,7 +97,7 @@
                     if(resp == 1){
                         location.replace('./login_user.php')
                     }else{
-                        alert("Use another username.")
+                        alert("Username already exists. Use another username")
                         $('#register-frm button').removeAttr('disable')
                         $('#register-frm button').html('Register')
                     }

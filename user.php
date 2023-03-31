@@ -1,3 +1,8 @@
+<?php
+if(isset($_SESSION['login_is_admin']) && $_SESSION['login_is_admin'] == 1){
+
+?>
+
  <section id="bg-bus" class="d-flex align-items-center">
 <main id="main">
 	<div class="container">
@@ -38,7 +43,7 @@
 <script>
     const user_id = <?php echo $_SESSION['login_id'] ?>;
 	$('#new_user').click(function(){
-		uni_modal('Add New Admin','manage_user.php')
+		uni_modal('Add New Admin','add_user.php')
 	})
 	window.load_user = function(){
 		$('#user-field').dataTable().fnDestroy();
@@ -116,3 +121,5 @@
 		load_user()
 	})
 </script>
+<?php
+}

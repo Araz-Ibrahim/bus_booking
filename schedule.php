@@ -1,3 +1,7 @@
+<?php
+if(isset($_SESSION['login_id'])){
+
+?>
  <section id="bg-bus" class="d-flex align-items-center">
 <main id="main">
 	<div class="container-fluid">
@@ -87,9 +91,11 @@
 									tr.append('<td>'+resp[k].price+'</td>')
 									if('<?php echo $_SESSION['login_is_admin'] == 1 ? 1 : 0 ?>' == 1){
 									    tr.append('<td><center><button class="btn btn-sm btn-primary edit_schedule mr-2" data-id="'+resp[k].id+'">Edit</button><button class="btn btn-sm btn-danger remove_schedule" data-id="'+resp[k].id+'">Delete</button></center></td>')
-									}else{
-										tr.append('<td><center><button class="btn btn-sm btn-primary mr-2 text-white book_now" data-id="'+resp[k].id+'"><strong>Book Now</strong></button></center></td>')
-									}
+									}else if(resp[k].booked){
+                                        tr.append('<td><center><button class="btn btn-sm btn-secondary view_refs mr-2" data-id="'+resp[k].id+'">View Ref. No.</button><button class="btn btn-sm btn-warning cancel_book" data-id="'+resp[k].id+'">Cancel</button></center></td>')
+									} else {
+                                        tr.append('<td><center><button class="btn btn-sm btn-primary mr-2 text-white book_now" data-id="'+resp[k].id+'"><strong>Book Now</strong></button></center></td>')
+                                    }
 									$('#schedule-field tbody').append(tr)
 
 								})
@@ -118,6 +124,12 @@
 		_conf('Are you sure to delete this data?','remove_schedule',[$(this).attr('data-id')])
 
 		})
+        $('.view_refs').click(function(){
+            uni_modal('Reference Number','view_ref.php?id='+$(this).data('id'))
+        })
+        $('.cancel_book').click(function(){
+            _conf('Are you sure to cancel this booking?','cancel_book',[$(this).data('id')])
+        })
 	}
 	function remove_schedule($id=''){
 		start_load()
@@ -140,7 +152,40 @@
 			}
 		})
 	}
+    function cancel_book($id=''){
+        start_load()
+        $.ajax({
+            url:'cancel_book.php',
+            method:'POST',
+            data:{id:$id},
+            error:err=>{
+                console.log(err)
+                alert_toast("An error occured","danger");
+                end_load()
+            },
+            success:function(resp){
+                if(resp== 1){
+                    alert_toast("Data succesfully canceled","success");
+                    end_load()
+                    $('.modal').modal('hide')
+                    load_schedule()
+                } else {
+                    end_load()
+                    $('.modal').modal('hide')
+                    load_schedule()
+                    uni_modal('Warning','cant_cancel.php?id='+$(this).data('id'))
+
+                }
+            }
+        })
+    }
 	$(document).ready(function(){
 		load_schedule()
+
+        $('.submit').on('click',function(){
+            load_schedule()
+        })
 	})
 </script>
+<?php
+}

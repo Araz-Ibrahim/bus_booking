@@ -3,7 +3,7 @@ session_start();
 include('db_connect.php');
 	extract($_POST);
 	$data = " name = '$name' ";
-	$data .= ", username = '$username' ";
+//	$data .= ", username = '$username' ";
 	$data .= ", password = '$password' ";
     $data .= ", blood_type = '$blood_type' ";
     $data .= ", phone = '$phone' ";
@@ -13,6 +13,6 @@ include('db_connect.php');
 	$update= $conn->query("UPDATE users set ".$data." where id =".$id);
 	if($update){
 		$_SESSION['login_name'] = $name;
-		$_SESSION['login_username'] = $username;
+//		$_SESSION['login_username'] = $username;
 		echo 1;
 	}

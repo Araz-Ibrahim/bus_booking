@@ -1,3 +1,8 @@
+<?php
+if(isset($_SESSION['login_is_admin']) && $_SESSION['login_is_admin'] == 1){
+
+?>
+
  <section id="bg-bus" class="d-flex align-items-center">
 <main id="main">
 	<div class="container">
@@ -122,3 +127,6 @@
 		load_location()
 	})
 </script>
+
+<?php
+}
