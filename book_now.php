@@ -4,6 +4,14 @@
 include 'db_connect.php';
 extract($_POST);
 
+if((intval($availability) - intval($count)) < intval($qty)){
+    $count = intval($count);
+    $availability = intval($availability);
+    $seatsLeft = $availability - $count;
+    echo json_encode(array('status'=> 2, 'msg' => 'Sorry, only ' . $seatsLeft .' seat/s left for this schedule.'));
+    exit;
+}
+
 $data = ' schedule_id = '.$sid.' ';
 $data .= ', user_id = '.$user_id.' ';
 $data .= ', qty ="'.$qty.'" ';

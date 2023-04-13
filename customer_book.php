@@ -29,6 +29,8 @@ if(isset($_SESSION['login_id']) && isset($_GET['bid'])){
 			<?php if(($count < $meta['availability']) && isset($_SESSION['login_id'])): ?>
 			<input type="hidden" class="form-control" id="sid" name="sid" value='<?php echo isset($_GET['id']) ? $_GET['id'] : '' ?>' required="">
 			<input type="hidden" class="form-control" id="sid" name="bid" value='<?php echo isset($_GET['bid']) ? $_GET['bid'] : '' ?>' required="">
+            <input type="hidden" name="count" value="<?php echo $count ?>">
+            <input type="hidden" name="availability" value="<?php echo $meta['availability'] ?>">
 
             <input type="hidden" name="user_id" value="<?php echo isset($bmeta['user_id']) ? $bmeta['user_id'] : ($_SESSION['login_is_admin'] == 0 ? $_SESSION['login_id'] : ''); ?>">
 
@@ -69,7 +71,7 @@ if(isset($_SESSION['login_id']) && isset($_GET['bid'])){
 			error:err=>{
 				console.log(err)
     			end_load()
-    			alert_toast('An error occured','danger');
+    			alert_toast('An error occurred','danger');
 			},
 			success:function(resp){
 				resp = JSON.parse(resp)
@@ -83,7 +85,11 @@ if(isset($_SESSION['login_id']) && isset($_GET['bid'])){
     				}else{
     					load_booked();
     				}
-				}
+				} else if(resp.status == 2) {
+                    end_load()
+                    $('.modal').modal('hide')
+                    alert_toast(resp.msg,'warning');
+                }
 			}
 		})
 	})
